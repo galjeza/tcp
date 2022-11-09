@@ -10,7 +10,6 @@ function objToBuffer(obj) {
     return Buffer.from(str);
 }
 
-// write a function to decrypt the message
 function decrypt(message, key) {
     var decipher = crypto.createDecipher('des-ede3', key);
     var dec = decipher.update(message, 'hex', 'utf8');
@@ -52,16 +51,11 @@ const getDataFromUser = async () => {
             break;
     }
     return {header, payload};
-
 }
-
-
-
 
 
 const client = new net.Socket();
 client.on('data', (data) => {
-
     console.log("Odgovor strežnika: ", JSON.parse(data).payload);
     if (JSON.parse(data).header === "G") {
         console.log("Dešifrirano sporočilo:", decrypt(JSON.parse(data).payload, "skrivnogeslo"));
@@ -71,31 +65,34 @@ client.on('data', (data) => {
         for (let i = 0; i < board.length; i++) {
             console.log(board[i].join(""));
         }
-
     }
+    console.log("------------------------------")
 });
 
 
 
-getDataFromUser().then((data) => {
-    client.connect(PORT,  () => {
+
+
+
+
+
+function main(){
+    getDataFromUser().then((data) => {
+        client.connect(PORT,  () => {
             console.log("connected");
             client.write(objToBuffer({header:data.header, payload: data.payload}));
-            // wait for server to respond
-            setTimeout(() => {
-                client.end();
-            }, 1000);
+            client.end()
         })
     })
+        setTimeout(
+            ()=>{
+                main()
+            },500
+        )
+}
 
 
-
-
-
-
-
-
-
+main();
 
 
 
