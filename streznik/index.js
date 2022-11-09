@@ -88,7 +88,7 @@ server.on('connection', function(socket) {
                 for (let i = 0; i < board.length; i++) {
                     console.log(board[i].join(""));
                 }
-                socket.write(JSON.stringify({header: "F", payload: "Šahovnica" + board}));
+                socket.write(JSON.stringify({header: "F", payload: board}));
                 break;
             case "G":
                 console.log("šifrirano sporočilo:"+ payload, encrypt(payload, "skrivnogeslo"));

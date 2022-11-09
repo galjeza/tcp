@@ -65,6 +65,13 @@ client.on('data', (data) => {
     console.log("Odgovor strežnika: ", JSON.parse(data).payload);
     if (JSON.parse(data).header === "G") {
         console.log("Dešifrirano sporočilo:", decrypt(JSON.parse(data).payload, "skrivnogeslo"));
+    }if (JSON.parse(data).header==="F"){
+        console.log("Šahovnica:");
+        const board = JSON.parse(data).payload;
+        for (let i = 0; i < board.length; i++) {
+            console.log(board[i].join(""));
+        }
+
     }
 });
 
