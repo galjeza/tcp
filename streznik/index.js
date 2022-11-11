@@ -94,7 +94,7 @@ server.on('connection', function(socket) {
                     socket.write(JSON.stringify({header:"ERR",payload:"Napačni header!"}))
             }
         }catch (err){
-            socket.write(JSON.stringify({header:"ERR",payload:"Napaka"}))
+            socket.write(JSON.stringify({header:"ERR",payload:err.message}))
         }
 
 
